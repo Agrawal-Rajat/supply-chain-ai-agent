@@ -7,6 +7,7 @@ import Charts from "./Charts";
 import ColorAnalysis from "./ColorAnalysis";
 import ColorPalette from "./ColorPalette";
 import Loader from "./loader";
+import Shimmer from "./loader";
 
 // Enhanced CSS Styles with better theme consistency
 const styles = `
@@ -582,7 +583,7 @@ export default function NewDashboard() {
 
   return (
     <>
-      {loading && <Loader />}
+      {loading && <Shimmer />}
 
       <style>{styles}</style>
       <div className="dashboard-container">

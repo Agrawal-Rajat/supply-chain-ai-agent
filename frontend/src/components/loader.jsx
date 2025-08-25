@@ -1,81 +1,6 @@
-// import React from 'react';
-
-
-// export default function Loader() {
-//   const styles = `
-//     .loader-container {
-//       position: fixed;
-//       top: 0;
-//       left: 0;
-//       width: 100vw;
-//       height: 100vh;
-//       display: flex;
-//       justify-content: center;
-//       align-items: center;
-//       background-color: #f0f2f5;
-//       z-index: 9999;
-//       overflow: hidden;
-//     }
-
-//     .loader {
-//       position: relative;
-//       width: 80px;
-//       height: 80px;
-//     }
-
-//     .loader-circle {
-//       position: absolute;
-//       top: 0;
-//       left: 0;
-//       width: 100%;
-//       height: 100%;
-//       border: 8px solid #3498db;
-//       border-radius: 50%;
-//       border-top-color: transparent;
-//       animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-//     }
-
-//     .loader-circle:nth-child(1) {
-//       animation-delay: -0.45s;
-//     }
-
-//     .loader-circle:nth-child(2) {
-//       animation-delay: -0.3s;
-//     }
-
-//     .loader-circle:nth-child(3) {
-//       animation-delay: -0.15s;
-//     }
-
-//     @keyframes spin {
-//       0% {
-//         transform: rotate(0deg);
-//       }
-//       100% {
-//         transform: rotate(360deg);
-//       }
-//     }
-//   `;
-
-//   return (
-//     <>
-//       <style>{styles}</style>
-//       <div className="loader-container">
-//         <div className="loader">
-//           <div className="loader-circle"></div>
-//           <div className="loader-circle"></div>
-//           <div className="loader-circle"></div>
-//           <div className="loader-circle"></div>
-//         </div>
-//       </div>
-//     </>
-//   );
-// }
 import React, { useState, useEffect } from 'react';
 
-// यह घटक एक फुल-स्क्रीन लोडर प्रदर्शित करता है
-// जब तक कि आपका मुख्य कंटेंट लोड न हो जाए।
-function Loader() {
+function Shimmer() {
   const styles = `
     .loader-container {
       position: fixed;
@@ -144,4 +69,4 @@ function Loader() {
     </>
   );
 }
-export default Loader;  
+export default Shimmer;  

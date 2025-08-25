@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./LoginForm.css";
-import { Loader } from "lucide-react";
+
 
 const LoginForm = () => {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -62,7 +62,7 @@ const LoginForm = () => {
 
   return (
     <>
-      {loading && <Loader />}
+   
 
       <div className="auth-bg">
         <form className="auth-card" onSubmit={handleSubmit} autoComplete="off">

@@ -227,6 +227,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./AuthPanel.css";
 import { Loader } from "lucide-react";
+import Shimmer from "./loader";
 
 const SignUpForm = () => {
   const [form, setForm] = useState({
@@ -296,7 +297,7 @@ const SignUpForm = () => {
 
   return (
     <>
-      {loading && <Loader />}
+      {loading && <Shimmer />}
 
       <div className="auth-bg">
         <form className="auth-card" onSubmit={handleSubmit} autoComplete="off">
