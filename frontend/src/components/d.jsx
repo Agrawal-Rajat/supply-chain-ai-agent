@@ -531,11 +531,23 @@ export default function NewDashboard() {
   const [analysisData, setAnalysisData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [suppliers, setSuppliers] = useState([]);
+  const [selectedSupplier, setSelectedSupplier] = useState(null);
 
+  // 1️⃣ Fetch suppliers on mount
   useEffect(() => {
-    const fetchAnalysis = async () => {
+    const fetchSuppliers = async () => {
       try {
         setLoading(true);
+        const suppliersRes = await fetch("http://localhost:5000/api/suppliers", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        const suppliersData = await suppliersRes.json();
+        setSuppliers(suppliersData);
+
+        if (suppliersData.length > 0) {
+          setSelectedSupplier(suppliersData[0]); // default: first supplier
         // 1️⃣ Fetch suppliers
         const suppliersRes = await fetch(
           "http://localhost:5000/api/suppliers",
@@ -554,13 +566,28 @@ export default function NewDashboard() {
           setLoading(false);
           return;
         }
+        setLoading(false);
+      } catch (err) {
+        console.error("❌ Error fetching suppliers:", err);
+        setLoading(false);
+      }
+    };
 
-        // 2️⃣ Pick first supplier ID (or you can add dropdown later for selection)
-        const supplierId = suppliers[0]._id;
+    fetchSuppliers();
+  }, []);
 
+  // 2️⃣ Fetch analysis whenever selectedSupplier changes
+  useEffect(() => {
+    const fetchAnalysis = async () => {
+      if (!selectedSupplier?._id) return;
+      try {
+        setLoading(true);
+        const analysisRes = await fetch(
+          `http://localhost:5000/api/suppliers/${selectedSupplier._id}/analysis`,
         // 3️⃣ Fetch analysis data
         const analysisRes = await fetch(
           `http://localhost:5000/api/suppliers/${supplierId}/analysis`,
+
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -568,18 +595,21 @@ export default function NewDashboard() {
           }
         );
         const analysis = await analysisRes.json();
+
         console.log("✅ Analysis fetched:", analysis);
 
         setAnalysisData(analysis); // ✅ Save for components
+
         setLoading(false);
       } catch (err) {
-        console.error("❌ Error fetching data:", err);
+        console.error("❌ Error fetching analysis:", err);
         setLoading(false);
       }
     };
 
     fetchAnalysis();
-  }, []);
+  }, [selectedSupplier]);
+
 
   return (
     <>
@@ -593,15 +623,15 @@ export default function NewDashboard() {
             activeTab={activeTab}
             setActiveTab={setActiveTab}
             data={suppliers}
+
+            selectedSupplier={selectedSupplier}
+            setSelectedSupplier={setSelectedSupplier}
           />
 
           <main className="main-content">
-            {/* ✅ Pass fetched analysisData to components */}
             <HeaderCards data={analysisData} />
             <RouteCards data={analysisData} />
             <Charts data={analysisData} />
-            {/* <ColorAnalysis data={analysisData} /> */}
-            {/* <ColorPalette data={analysisData} /> */}
           </main>
         </div>
       </div>
